@@ -1,22 +1,32 @@
 # Intune Enrollment Troubleshooting Toolkit
 
-A read-only PowerShell toolkit for Intune enrollment and MDM troubleshooting evidence.
+A PowerShell toolkit for Intune enrollment diagnostics and local management-component repair.
 
-## Features
-
-- dsregcmd status export
-- MDM enrollment event summary
-- Device management service context
-- Company Portal presence check
-- Scheduled task context
-- CSV, TXT, and HTML reports
-
-## How to run
+## Diagnostic script
 
 ```powershell
 powershell.exe -ExecutionPolicy Bypass -File .\Intune_Enrollment_Troubleshooting_Toolkit.ps1
 ```
 
-## Safety
+## Repair script
 
-Diagnostic-only. It does not enroll, unenroll, or modify MDM settings.
+```powershell
+powershell.exe -ExecutionPolicy Bypass -File .\Intune_Enrollment_Repair_Toolkit.ps1 -TriggerMdmSync -DryRun
+```
+
+Available actions:
+
+```powershell
+.\Intune_Enrollment_Repair_Toolkit.ps1 -RestartIntuneManagementExtension
+.\Intune_Enrollment_Repair_Toolkit.ps1 -RestartMdmServices
+.\Intune_Enrollment_Repair_Toolkit.ps1 -TriggerMdmSync
+.\Intune_Enrollment_Repair_Toolkit.ps1 -ResetCompanyPortal
+```
+
+The repair script restarts local Intune services, starts discovered management synchronisation tasks, and resets or re-registers Company Portal. It captures device-registration, service, task and application state before and after repair. It supports `-DryRun`, confirmation prompts, logs and clear exit codes.
+
+It does not remove the device from management or change cloud-side Intune policies.
+
+## Author
+
+Dewald Pretorius — L2 IT Support Engineer
